@@ -1,23 +1,26 @@
 <script setup lang="ts">
+const { data } = await useFetch('/api/test', {
+  lazy: true,
+  pick: ['list']
+})
+
+const counter = useCounter()
+
 useHead({
   title: 'My App',
 })
 </script>
 <template>
   <div>
-    <CustomButton class="font-sans" is-with-icon text="Button" />
+    <CustomButton @click="counter++" class="font-sans" is-with-icon text="Button" />
+    {{ counter }}
     <NuxtLink to="/about">
       <img class="w-100px" src="/img/monke.png" alt="Monke">
     </NuxtLink>
     <ul>
-      <li>
-        <NuxtLink to="/posts/1">
-          Post 1
-        </NuxtLink>
-      </li>
-      <li>
-        <NuxtLink to="/posts/2">
-          Post 2
+      <li v-for="item in data?.list">
+        <NuxtLink :to="`/posts/${item}`">
+          Post {{ item }}
         </NuxtLink>
       </li>
     </ul>
