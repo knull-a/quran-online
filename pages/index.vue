@@ -12,7 +12,7 @@ useHead({
 </script>
 <template>
   <div>
-    <CustomButton @click="counter++" class="font-sans" is-with-icon text="Button" />
+    <CustomButton @click="counter++" class="font-sans" text="Button" />
     {{ counter }}
     <NuxtLink to="/about">
       <img class="w-100px" src="/img/monke.png" alt="Monke">

@@ -2,21 +2,25 @@
 useHead({
   titleTemplate: (titleChunk) => {
     return titleChunk ? `${titleChunk} - Nuxt Test` : 'Nuxt Test';
+  },
+  bodyAttrs: {
+    class: 'dark'
   }
 })
 </script>
 <template>
-  <NuxtLayout>
-    <NuxtPage />
+  <NuxtLayout class="dark">
+    <NuxtPage class="font-sansSerif" />
   </NuxtLayout>
-  
 </template>
 <style>
 @import '@unocss/reset/tailwind.css';
+
 .page-enter-active,
 .page-leave-active {
   transition: all 0.2s;
 }
+
 .page-enter-from,
 .page-leave-to {
   opacity: 0;

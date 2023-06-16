@@ -1,6 +1,35 @@
+<script setup lang="ts">
+const themeMode = ref('Auto')
+const themeOptions = ref(['Light', 'Auto', 'Dark'])
+</script>
 <template>
-  <div>
-    Some default layout shared across all pages
-    <slot />
+  <div class="bg-white dark:text-white dark:bg-black flex flex-col justify-between h-screen">
+    <header class="px-10 py-3 text-xl flex items-center justify-between">
+      <h1 class="font-bold">Quran Online</h1>
+      <div class="flex gap-2">
+        <div class=" i-mdi-account" />
+        <div class="i-mdi-web" />
+        <div class="i-mdi-cog" />
+        <div class="i-mdi-magnify" />
+      </div>
+    </header>
+    <div class=" flex-1">
+      <slot />
+    </div>
+    <footer class="flex items-center justify-between py-12 wrapper">
+      <div class="font-bold">
+        <h1>Quran Online</h1>
+        <p>Read, study, and learn The Noble Quran.</p>
+      </div>
+      <div class="text-center">
+        <a href="/" class="mr-4">API</a>
+        <a href="/">Github</a>
+        <p>© 2023 knull-a</p>
+      </div>
+      <div class="flex items-center gap-6">
+        <CustomSelect icon="i-mdi-brightness-6" :text="themeMode" :options="themeOptions" />
+        <CustomSelect icon="i-mdi-web" text="English" />
+      </div>
+    </footer>
   </div>
 </template>

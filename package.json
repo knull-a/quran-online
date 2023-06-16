@@ -14,6 +14,7 @@
     "@types/node": "^18",
     "@unocss/nuxt": "^0.53.1",
     "@unocss/preset-icons": "^0.53.1",
+    "@unocss/preset-mini": "^0.53.1",
     "@unocss/preset-typography": "^0.53.1",
     "@unocss/preset-uno": "^0.53.1",
     "@unocss/preset-web-fonts": "^0.53.1",

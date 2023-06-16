@@ -1,33 +1,38 @@
 // uno.config.ts
 import {
-  defineConfig, presetAttributify, presetIcons,
-  presetTypography, presetUno, presetWebFonts,
-  transformerDirectives, transformerVariantGroup
-} from 'unocss'
+  defineConfig,
+  presetAttributify,
+  presetIcons,
+  presetTypography,
+  presetMini,
+  presetWebFonts,
+  transformerDirectives,
+  transformerVariantGroup,
+} from "unocss";
 
 export default defineConfig({
-  shortcuts: [
-    // ...
-  ],
+  shortcuts: {
+    'wrapper': 'w-full max-w-[1152px] m-auto'
+  },
   theme: {
     colors: {
       // ...
-    }
-  },
+    },
+  }, 
   presets: [
-    presetUno(),
+    presetMini({
+      dark: 'class'
+    }),
     presetAttributify(),
     presetIcons(),
     presetTypography(),
     presetWebFonts({
       fonts: {
         // these will extend the default theme
-        sans: ['Montserrat', 'Montserrat:400,700'],
+        sansSerif: ["Inter", "Inter:400,700"],
+        sans: ["Noto Naskh Arabic", "Noto Naskh Arabic:400,700"],
       },
     }),
   ],
-  transformers: [
-    transformerDirectives(),
-    transformerVariantGroup(),
-  ],
-})
+  transformers: [transformerDirectives(), transformerVariantGroup()],
+});
