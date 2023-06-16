@@ -1,12 +1,22 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { useThemeStore } from '@/store/useThemeStore';
+const { theme } = storeToRefs(useThemeStore())
+
+// const storageTheme = ref(localStorage.getItem('theme'))
+console.log(process.client ? localStorage.getItem('theme') : '')
+
+const storageItem = computed(() => process.client ? localStorage.getItem('theme') : '')
+
 useHead({
   titleTemplate: (titleChunk) => {
     return titleChunk ? `${titleChunk} - Nuxt Test` : 'Nuxt Test';
   },
   bodyAttrs: {
-    class: 'dark'
+    class: theme
   }
 })
+
 </script>
 <template>
   <NuxtLayout class="dark">
