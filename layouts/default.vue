@@ -1,5 +1,8 @@
 <script setup lang="ts">
+const { locale, locales } = useI18n()
 const themeOptions = ref(['light', 'dark', 'system'])
+const localeOptions = ref(['en', 'ru'])
+
 </script>
 <template>
   <div class="bg-white text-dark dark:text-white dark:bg-dark flex flex-col justify-between h-screen">
@@ -18,7 +21,7 @@ const themeOptions = ref(['light', 'dark', 'system'])
     <footer class="flex items-center justify-between py-12 wrapper">
       <div class="font-bold">
         <h1>Quran Online</h1>
-        <p>Read, study, and learn The Noble Quran.</p>
+        <p>{{$t('caption')}}</p>
       </div>
       <div class="text-center">
         <a href="/" class="mr-4">API</a>
@@ -27,7 +30,7 @@ const themeOptions = ref(['light', 'dark', 'system'])
       </div>
       <div class="flex items-center gap-6">
         <CustomSelect icon="i-mdi-brightness-6" v-model="$colorMode.preference" :options="themeOptions" />
-        <CustomSelect icon="i-mdi-web" text="English" />
+        <CustomSelect icon="i-mdi-web" v-model="locale" :options="localeOptions" />
       </div>
     </footer>
   </div>
