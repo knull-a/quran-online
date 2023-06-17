@@ -23,7 +23,7 @@ const toUpperCase = (item: string) => item.charAt(0).toUpperCase() + item.substr
 </script>
 <template>
   <div @click="toggleStatus"
-    class="cursor-pointer relative py-1 px-2 gap-1 border border-black rounded flex items-center hover:brightness-110">
+    class="cursor-pointer relative py-1 px-2 gap-1 border dark:border-white border-dark rounded flex items-center hover:brightness-110">
     <ul v-show="status" class="absolute -top-20">
       <li class="hover" @click="selectOption(option)" v-for="(option, idx) in options" :key="idx">
         {{ toUpperCase(option) }}

@@ -1,15 +1,8 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { useThemeStore } from '@/store/useThemeStore';
-
-const { theme } = storeToRefs(useThemeStore())
-const {changeTheme} = useThemeStore()
-const newTheme = ref('dark')
-const themeOptions = ref(['light', 'dark'])
-
+const themeOptions = ref(['light', 'dark', 'system'])
 </script>
 <template>
-  <div class="bg-white dark:text-white dark:bg-black flex flex-col justify-between h-screen">
+  <div class="bg-white text-dark dark:text-white dark:bg-dark flex flex-col justify-between h-screen">
     <header class="px-10 py-3 text-xl flex items-center justify-between">
       <h1 class="font-bold">Quran Online</h1>
       <div class="flex gap-2">
@@ -33,8 +26,7 @@ const themeOptions = ref(['light', 'dark'])
         <p>© 2023 knull-a</p>
       </div>
       <div class="flex items-center gap-6">
-        {{ newTheme || 'hello' }}
-        <CustomSelect icon="i-mdi-brightness-6" v-model="theme" :options="themeOptions" />
+        <CustomSelect icon="i-mdi-brightness-6" v-model="$colorMode.preference" :options="themeOptions" />
         <CustomSelect icon="i-mdi-web" text="English" />
       </div>
     </footer>
