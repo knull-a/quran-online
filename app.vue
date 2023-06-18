@@ -4,7 +4,7 @@ useHead({
     return titleChunk ? `${titleChunk} - Nuxt Test` : 'Nuxt Test';
   },
   bodyAttrs: {
-    class: useColorMode().preference
+    class: useColorMode().preference,
   }
 })
 </script>
@@ -12,6 +12,7 @@ useHead({
   <NuxtLayout>
     <NuxtPage class="font-sansSerif" />
   </NuxtLayout>
+  <div id="modal-container" />
 </template>
 <style>
 @import '@unocss/reset/tailwind.css';
