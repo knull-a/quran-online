@@ -19,13 +19,7 @@ type SearchItem = {
 }
 
 const searchField = ref('')
-const searchData = ref<Search | null>({
-  data: {
-    matches: []
-  },
-  code: 0,
-  status: ''
-})
+const searchData = ref<Search | null>(null)
 const isPending = ref(false)
 
 const runtimeConfig = useRuntimeConfig()
@@ -36,13 +30,14 @@ watchDebounced(searchField, async () => {
       isPending.value = true
       const { data } = await useFetch<Search>(runtimeConfig.public.apiBase + `search/${searchField.value}/all/en.arberry`)
       searchData.value = data.value
+      // isPending.value = pending.value
     } catch (error) {
       console.error(error)
     } finally {
       isPending.value = false
     }
   }
-}, { debounce: 1500 })
+}, { debounce: 500 })
 
 const [modalStatus, toggleModal] = useToggle()
 </script>
@@ -59,12 +54,19 @@ const [modalStatus, toggleModal] = useToggle()
         <input v-model="searchField" type="text" class="border-b-1 focus:outline-0 pb-1 text-lg w-500px dark-bg-dark"
           :placeholder="$t('searchPlaceholder')">
       </div>
-      ispending {{ isPending }}
       <div v-if="isPending">
-        Loading
+        <div v-for="item in 5" class="flex flex-col gap-2 py-2 w-full animate-pulse" >
+          <div class="bg-grey w-200px h-16px rounded" />
+          <div class="bg-grey w-full h-16px rounded" />
+          <div class="bg-grey w-80% h-16px rounded" />
+          <div class="bg-grey w-90% h-16px rounded" />
+        </div>
       </div>
-      <div v-else>
-        <div v-for="item in searchData?.data.matches" class="border-b-1 py-2">
+      <div v-else-if="!searchData">
+        <QuranIcon class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" />
+      </div>
+      <div v-else class="max-w-500px dark:text-white">
+        <div v-for="item in searchData.data.matches" class="border-b-1 py-2">
           <RouterLink to="/" class="text-primary">
             {{ item.surah.englishName }}
             {{ item.surah.number }}:{{ item.numberInSurah }}
@@ -74,7 +76,6 @@ const [modalStatus, toggleModal] = useToggle()
           </div>
         </div>
       </div>
-      <QuranIcon class="m-auto mt-10 opacity-20" />
     </div>
   </ModalMain>
 </template>

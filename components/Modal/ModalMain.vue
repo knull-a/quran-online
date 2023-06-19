@@ -35,7 +35,7 @@ onClickOutside(modalElement, () => {
           <div>
             <div class="flex justify-between gap-10">
               <h3 class="text-center text-lg mb-2">{{ showModalHeader }}</h3>
-              <button class="absolute top-4 right-4 i-mdi-close" @click="closeModal" />
+              <button class="absolute top-4 right-4 i-mdi-close dark:text-white" @click="closeModal" />
             </div>
             <div>
               <slot />
