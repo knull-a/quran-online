@@ -2,10 +2,9 @@
 const { locale, locales } = useI18n()
 const themeOptions = ref(['light', 'dark', 'system'])
 const localeOptions = ref(['en', 'ru'])
-
 </script>
 <template>
-  <div class="bg-white text-dark dark:text-white dark:bg-dark flex flex-col justify-between h-screen">
+  <div class="bg-white text-dark dark:text-white dark:bg-dark flex flex-col justify-between min-h-screen">
     <header class="px-10 py-3 text-xl flex items-center justify-between">
       <h1 class="font-bold">Quran Online</h1>
       <div class="flex gap-2">
@@ -15,7 +14,7 @@ const localeOptions = ref(['en', 'ru'])
         <div class="i-mdi-magnify" />
       </div>
     </header>
-    <div class=" flex-1">
+    <div class="flex-1">
       <slot />
     </div>
     <footer class="flex items-center justify-between py-12 wrapper">

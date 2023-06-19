@@ -20,8 +20,9 @@ export default defineConfig({
   },
   theme: {
     colors: {
+      primary: "#2ca4ab",
       dark: "#1f2125",
-      grey: "#666666"
+      grey: "#666666", 
     },
   },
   presets: [
