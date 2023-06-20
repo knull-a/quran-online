@@ -26,6 +26,11 @@ export default defineNuxtConfig({
       },
     ],
     defaultLocale: "en",
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root',  
+    }
   },
   colorMode: {
     classSuffix: "",

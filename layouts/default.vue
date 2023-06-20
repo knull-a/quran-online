@@ -1,7 +1,9 @@
 <script setup lang="ts">
-const { locale, locales } = useI18n()
+import { useLocalStorage } from '@vueuse/core'
+const { locale } = useI18n()
 const themeOptions = ref(['light', 'dark', 'system'])
 const localeOptions = ref(['en', 'ru'])
+useLocalStorage('locale', locale)
 </script>
 <template>
   <div class="bg-white text-dark dark:text-white dark:bg-dark flex flex-col justify-between min-h-screen">
@@ -20,7 +22,7 @@ const localeOptions = ref(['en', 'ru'])
     <footer class="flex items-center justify-between py-12 wrapper">
       <div class="font-bold">
         <h1>Quran Online</h1>
-        <p>{{$t('caption')}}</p>
+        <p>{{ $t('caption') }}</p>
       </div>
       <div class="text-center">
         <a href="/" class="mr-4">API</a>
