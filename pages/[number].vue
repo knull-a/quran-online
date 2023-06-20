@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { Data, Surah, Ayah } from "~/types/global"
+import { useClipboard } from "@vueuse/core"
+
 type SurahItem = {
   data: Surah & {
     ayahs: Ayah[]
@@ -7,6 +9,7 @@ type SurahItem = {
 } & Data
 
 const { locale } = useI18n()
+const { copy, copied } = useClipboard()
 
 const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
@@ -19,6 +22,10 @@ useHead({
 
 const edition = computed(() => locale.value === "en" ? "en.arberry" : "ru.kuliev")
 const { data: surah } = await useLazyFetch<SurahItem>(`${runtimeConfig.public.apiBase}surah/${route.params.number}`)
+
+const surahNumber = (localedAyah: Ayah) => `${surah?.value?.data.number}:${localedAyah.numberInSurah}`
+
+const getSurahAyahText = (index: number) => surah.value ? surah.value.data.ayahs[index].text : '';
 
 watchEffect(async () => {
   const { data } = await useLazyFetch<SurahItem>(`${runtimeConfig.public.apiBase}surah/${route.params.number}/${edition.value}`)
@@ -34,19 +41,21 @@ watchEffect(async () => {
     </div>
     <div>
       <div class="flex flex-col gap-3 w-full">
-        <div v-for="(localedAyah, index) in localedData" :key="index" class="flex items-center gap-10 border-gray border-b py-8">
+        <div v-for="(localedAyah, index) in localedData" :key="index"
+          class="flex items-center gap-10 border-gray border-b py-8">
           <div class="flex flex-col gap-1 items-center">
-            <p>{{ surah.data.number }}:{{ localedAyah.numberInSurah }}</p>
+            <p>{{ surahNumber(localedAyah) }}</p>
             <div class="text-xl">
-              <div class="i-mdi-bookmark mb-2" />
-              <div class="i-mdi-content-copy" />
+              <div class="i-mdi-bookmark hover:bg-primary cursor-pointer mb-2" />
+              <div class="i-mdi-content-copy hover:bg-primary cursor-pointer" @click="copy(getSurahAyahText(index))" />
             </div>
           </div>
           <div class="w-full">
-            <p class="text-right text-2xl float-right">{{ surah.data.ayahs[index].text }}</p>
+            <p class="text-right text-2xl float-right">{{ getSurahAyahText(index) }}</p>
             <p class="w-full mt-10">{{ localedAyah.text }}</p>
           </div>
         </div>
+        <ToastMain />
       </div>
     </div>
   </div>
