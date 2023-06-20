@@ -17,4 +17,5 @@ export type Surah = {
   englishName: string;
   englishNameTranslation: string;
   revelationType: string;
+  numberOfAyahs: number
 };

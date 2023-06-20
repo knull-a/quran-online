@@ -22,7 +22,9 @@ export default defineConfig({
     colors: {
       primary: "#2ca4ab",
       dark: "#1f2125",
+      darkSecondary: "#343a40",
       grey: "#666666", 
+      light: "#f4f5f6"
     },
   },
   presets: [
