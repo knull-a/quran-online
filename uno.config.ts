@@ -14,9 +14,7 @@ import {
 export default defineConfig({
   rules: [],
   shortcuts: {
-    wrapper: "w-full max-w-[1152px] m-auto",
-    "bg-main":
-      "bg-[url(https://upload.wikimedia.org/wikipedia/commons/d/dc/Young_cats.jpg)]",
+    wrapper: "w-full max-w-[1152px] m-auto px-5",
   },
   theme: {
     colors: {

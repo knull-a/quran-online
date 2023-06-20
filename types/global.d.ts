@@ -17,5 +17,17 @@ export type Surah = {
   englishName: string;
   englishNameTranslation: string;
   revelationType: string;
-  numberOfAyahs: number
+  numberOfAyahs: number;
+};
+
+export type Ayah = {
+  number: number;
+  text: string;
+  numberInSurah: number;
+  juz: number;
+  manzil: number;
+  page: number;
+  ruku: number;
+  hizbQuarter: number;
+  sajda: boolean;
 };
