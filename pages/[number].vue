@@ -36,13 +36,13 @@ const copyAyah = (index: number) => {
 }
 
 watchEffect(async () => {
-  const { data } = await useFetch<SurahItem>(`${runtimeConfig.public.apiBase}surah/${route.params.number}/${edition.value}`)
+  const { data } = await useLazyFetch<SurahItem>(`${runtimeConfig.public.apiBase}surah/${route.params.number}/${edition.value}`)
   if (data.value?.data.ayahs) localedData.value = data.value?.data.ayahs
-  console.log(data.value, runtimeConfig.public.apiBase, route.params.number, edition.value)
+  console.log(localedData.value)
 })
 </script>
 <template>
-  <div v-if="surah && localedData" class="wrapper">
+  <div v-if="surah && localedData.length" class="wrapper">
     <div class="text-center m-auto">
       <h2 class="text-5xl">{{ surah.data.name }}</h2>
       <p>{{ $t('length') }}: {{ surah.data.numberOfAyahs }} {{ $t('ayahs') }}</p>
@@ -50,7 +50,7 @@ watchEffect(async () => {
     </div>
     <div>
       <div class="flex flex-col gap-3 w-full">
-        <div v-for="(localedAyah, index) in localedData" :key="index"
+        <div v-for="(localedAyah, index) in localedData" :key="localedAyah.numberInSurah"
           class="flex items-center gap-10 border-gray border-b py-8">
           <div class="flex flex-col gap-1 items-center">
             <p>{{ surahNumber(localedAyah) }}</p>
@@ -60,7 +60,7 @@ watchEffect(async () => {
             </div>
           </div>
           <div class="w-full">
-            <!-- <p class="text-right text-2xl float-right">{{ getSurahAyahText(index) }}</p> -->
+            <p class="text-right text-2xl float-right">{{ getSurahAyahText(index) }}</p>
             <p class="w-full mt-10">{{ localedAyah.text }}</p>
           </div>
         </div>
