@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Data, Surah, Ayah } from "~/types/global"
+
 import { useClipboard } from "@vueuse/core"
+import { useToastStore, ToastStatus } from "~/stores/toastStore"
 
 type SurahItem = {
   data: Surah & {
@@ -10,6 +12,7 @@ type SurahItem = {
 
 const { locale } = useI18n()
 const { copy, copied } = useClipboard()
+const { createToast } = useToastStore()
 
 const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
@@ -27,9 +30,15 @@ const surahNumber = (localedAyah: Ayah) => `${surah?.value?.data.number}:${local
 
 const getSurahAyahText = (index: number) => surah.value ? surah.value.data.ayahs[index].text : '';
 
+const copyAyah = (index: number) => {
+  copy(getSurahAyahText(index))
+  createToast('Успешно скопировано!', ToastStatus.Success)
+}
+
 watchEffect(async () => {
-  const { data } = await useLazyFetch<SurahItem>(`${runtimeConfig.public.apiBase}surah/${route.params.number}/${edition.value}`)
+  const { data } = await useFetch<SurahItem>(`${runtimeConfig.public.apiBase}surah/${route.params.number}/${edition.value}`)
   if (data.value?.data.ayahs) localedData.value = data.value?.data.ayahs
+  console.log(data.value, runtimeConfig.public.apiBase, route.params.number, edition.value)
 })
 </script>
 <template>
@@ -47,11 +56,11 @@ watchEffect(async () => {
             <p>{{ surahNumber(localedAyah) }}</p>
             <div class="text-xl">
               <div class="i-mdi-bookmark hover:bg-primary cursor-pointer mb-2" />
-              <div class="i-mdi-content-copy hover:bg-primary cursor-pointer" @click="copy(getSurahAyahText(index))" />
+              <div class="i-mdi-content-copy hover:bg-primary cursor-pointer" @click="copyAyah(index)" />
             </div>
           </div>
           <div class="w-full">
-            <p class="text-right text-2xl float-right">{{ getSurahAyahText(index) }}</p>
+            <!-- <p class="text-right text-2xl float-right">{{ getSurahAyahText(index) }}</p> -->
             <p class="w-full mt-10">{{ localedAyah.text }}</p>
           </div>
         </div>
