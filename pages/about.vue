@@ -2,7 +2,7 @@
 
 </script>
 <template>
-  <h2>About Page</h2>
+  <NuxtLink to="/">About Page</NuxtLink>
   
 </template>
 <style scoped></style>

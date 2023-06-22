@@ -1,10 +1,8 @@
 <script setup lang="ts">
-const { data } = await useFetch('/api/test', {
-  lazy: true,
-  pick: ['list']
-})
+import MainIcon from '~/assets/icons/MainIcon.vue';
 
 const counter = useCounter()
+
 
 useHead({
   title: 'My App',
@@ -12,17 +10,20 @@ useHead({
 </script>
 <template>
   <div>
-    <CustomButton @click="counter++" class="font-sans" is-with-icon text="Button" />
-    {{ counter }}
-    <NuxtLink to="/about">
-      <img class="w-100px" src="/img/monke.png" alt="Monke">
-    </NuxtLink>
-    <ul>
-      <li v-for="item in data?.list">
-        <NuxtLink :to="`/posts/${item}`">
-          Post {{ item }}
-        </NuxtLink>
-      </li>
-    </ul>
+    <div class="relative">
+      <div
+        class="bg-[url(/img/background.jpg)] min-h-96 dark:saturate-10 dark:brightness-30 dark:contrast-110 absolute top-0 left-0 w-full">
+      </div>
+      <div class="relative flex flex-col gap-8 items-center py-20 ">
+        <MainIcon class="" />
+        <ModalSearch />
+      </div>
+    </div>
+    <div class="wrapper text-">
+      <TabsSurah />
+    </div>
   </div>
 </template>
+<style scoped>
+.bg {}
+</style>
