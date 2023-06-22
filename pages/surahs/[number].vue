@@ -46,30 +46,32 @@ watchEffect(async () => {
 })
 </script>
 <template>
-  <div v-if="surah && localedData.length" class="wrapper">
-    <div class="text-center m-auto">
-      <h2 class="text-5xl">{{ surah.data.name }}</h2>
-      <p>{{ $t('length') }}: {{ surah.data.numberOfAyahs }} {{ $t('ayahs') }}</p>
-      <p>{{ $t('revelation') }}: <span class="text-grey">{{ surah.data.revelationType }}</span></p>
-    </div>
     <div>
-      <div class="flex flex-col gap-3 w-full">
-        <div v-for="(localedAyah, index) in localedData" :key="localedAyah.numberInSurah"
-          class="flex items-center gap-10 border-gray border-b py-8">
-          <div class="flex flex-col gap-1 items-center">
-            <p>{{ surahNumber(localedAyah) }}</p>
-            <div class="text-xl">
-              <div class="i-mdi-bookmark-outline hover:bg-primary cursor-pointer mb-2" />
-              <div class="i-mdi-content-copy hover:bg-primary cursor-pointer" @click="copyAyah(index)" />
+      <div v-if="surah" class="wrapper">
+        <div class="text-center m-auto">
+          <h2 class="text-5xl">{{ surah.data.name }}</h2>
+          <p>{{ $t('length') }}: {{ surah.data.numberOfAyahs }} {{ $t('ayahs') }}</p>
+          <p>{{ $t('revelation') }}: <span class="text-grey">{{ surah.data.revelationType }}</span></p>
+        </div>
+        <div>
+          <div class="flex flex-col gap-3 w-full">
+            <div v-for="(localedAyah, index) in localedData" :key="localedAyah.numberInSurah"
+              class="flex items-center gap-10 border-gray border-b py-8">
+              <div class="flex flex-col gap-1 items-center">
+                <p>{{ surahNumber(localedAyah) }}</p>
+                <div class="text-xl">
+                  <div class="i-mdi-bookmark-outline hover:bg-primary cursor-pointer mb-2" />
+                  <div class="i-mdi-content-copy hover:bg-primary cursor-pointer" @click="copyAyah(index)" />
+                </div>
+              </div>
+              <div class="w-full">
+                <p class="text-right text-2xl float-right">{{ getSurahAyahText(index) }}</p>
+                <p class="w-full mt-10">{{ localedAyah.text }}</p>
+              </div>
             </div>
-          </div>
-          <div class="w-full">
-            <p class="text-right text-2xl float-right">{{ getSurahAyahText(index) }}</p>
-            <p class="w-full mt-10">{{ localedAyah.text }}</p>
+            <ToastMain />
           </div>
         </div>
-        <ToastMain />
       </div>
     </div>
-  </div>
 </template>

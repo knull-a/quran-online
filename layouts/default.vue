@@ -35,20 +35,22 @@ const changeLocale = (option: string) => locale.value = option
     <div class="flex-1">
       <slot />
     </div>
-    <footer class="flex items-center justify-between py-12 wrapper">
-      <div class="font-bold">
-        <h1>Quran Online</h1>
-        <p>{{ $t('caption') }}</p>
-      </div>
-      <div class="text-center">
-        <a href="/" class="mr-4">API</a>
-        <a href="/">Github</a>
-        <p>© 2023 knull-a</p>
-      </div>
-      <div class="flex items-center gap-6">
-        <CustomSelect reversed icon="i-mdi-brightness-6" v-model="$colorMode.preference" :options="themeOptions" />
-        <CustomSelect reversed icon="i-mdi-web" v-model="locale" :options="localeOptions" />
-      </div>
-    </footer>
+    <ClientOnly>
+      <footer class="flex items-center justify-between py-12 wrapper">
+        <div class="font-bold">
+          <h1>Quran Online</h1>
+          <p>{{ $t('caption') }}</p>
+        </div>
+        <div class="text-center">
+          <a href="/" class="mr-4">API</a>
+          <a href="/">Github</a>
+          <p>© 2023 knull-a</p>
+        </div>
+        <div class="flex items-center gap-6">
+          <CustomSelect reversed icon="i-mdi-brightness-6" v-model="$colorMode.preference" :options="themeOptions" />
+          <CustomSelect reversed icon="i-mdi-web" v-model="locale" :options="localeOptions" />
+        </div>
+      </footer>
+    </ClientOnly>
   </div>
 </template>
