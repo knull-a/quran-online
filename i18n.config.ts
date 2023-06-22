@@ -10,7 +10,7 @@ export default defineI18nConfig(() => ({
       revelation: 'Revelation'
     },
     ru: {
-      caption: 'Читай, слушай и изучай Священный Коран',
+      caption: 'Читайте, слушайте и изучайте Священный Коран',
       searchPlaceholder: 'Что вы хотите прочитать?',
       ayahs: 'аятов',
       length: 'Длина',

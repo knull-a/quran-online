@@ -1,19 +1,35 @@
 <script setup lang="ts">
-import { useLocalStorage } from '@vueuse/core'
+import { useLocalStorage, useToggle, useDark } from '@vueuse/core'
+
 const { locale } = useI18n()
 const themeOptions = ref(['light', 'dark', 'system'])
 const localeOptions = ref(['en', 'ru'])
+const isDark = useDark()
+
 useLocalStorage('locale', locale)
+const [localeStatus, toggleLocale] = useToggle()
+
+const toggleDark = useToggle(isDark)
+
+const changeLocale = (option: string) => locale.value = option
 </script>
 <template>
   <div class="bg-white text-dark dark:text-white dark:bg-dark flex flex-col justify-between min-h-screen">
     <header class="px-10 py-3 text-xl flex items-center justify-between">
       <NuxtLink to="/" class="font-bold">Quran Online</NuxtLink>
       <div class="flex gap-2">
-        <div class="i-mdi-account" />
-        <div class="i-mdi-web" />
-        <div class="i-mdi-cog" />
-        <div class="i-mdi-magnify" />
+        <button>
+          <div class="i-mdi-account" />
+        </button>
+        <button @click="toggleLocale()" class="relative">
+          <div class="i-mdi-web" />
+          <CustomSelectList class="text-sm min-w-50px" :options="localeOptions" :status="localeStatus"
+            @select-option="changeLocale" />
+        </button>
+        <button @click="toggleDark()">
+          <div class="i-mdi-brightness-6" />
+        </button>
+        <!-- <div class="i-mdi-magnify" /> -->
       </div>
     </header>
     <div class="flex-1">
@@ -30,8 +46,8 @@ useLocalStorage('locale', locale)
         <p>© 2023 knull-a</p>
       </div>
       <div class="flex items-center gap-6">
-        <CustomSelect icon="i-mdi-brightness-6" v-model="$colorMode.preference" :options="themeOptions" />
-        <CustomSelect icon="i-mdi-web" v-model="locale" :options="localeOptions" />
+        <CustomSelect reversed icon="i-mdi-brightness-6" v-model="$colorMode.preference" :options="themeOptions" />
+        <CustomSelect reversed icon="i-mdi-web" v-model="locale" :options="localeOptions" />
       </div>
     </footer>
   </div>

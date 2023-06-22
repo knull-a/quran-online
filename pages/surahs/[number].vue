@@ -59,7 +59,7 @@ watchEffect(async () => {
           <div class="flex flex-col gap-1 items-center">
             <p>{{ surahNumber(localedAyah) }}</p>
             <div class="text-xl">
-              <div class="i-mdi-bookmark hover:bg-primary cursor-pointer mb-2" />
+              <div class="i-mdi-bookmark-outline hover:bg-primary cursor-pointer mb-2" />
               <div class="i-mdi-content-copy hover:bg-primary cursor-pointer" @click="copyAyah(index)" />
             </div>
           </div>
