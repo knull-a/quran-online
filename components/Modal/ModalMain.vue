@@ -25,7 +25,7 @@ onClickOutside(modalElement, () => {
 })
 </script>
 <template>
-  <Teleport to="#modal-container">
+  <Teleport to="body">
     <Transition name="fade">
       <div
         class="fixed overflow-hidden overscroll-contain top-0 left-0 z-[9999] h-screen w-screen bg-[#00000055] backdrop-blur-3"

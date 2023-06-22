@@ -8,7 +8,7 @@ useLocalStorage('locale', locale)
 <template>
   <div class="bg-white text-dark dark:text-white dark:bg-dark flex flex-col justify-between min-h-screen">
     <header class="px-10 py-3 text-xl flex items-center justify-between">
-      <h1 class="font-bold">Quran Online</h1>
+      <NuxtLink to="/" class="font-bold">Quran Online</NuxtLink>
       <div class="flex gap-2">
         <div class="i-mdi-account" />
         <div class="i-mdi-web" />

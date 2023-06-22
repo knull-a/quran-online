@@ -10,6 +10,10 @@ type SurahItem = {
   }
 } & Data
 
+definePageMeta({
+  layout: "default",
+});
+
 const { locale } = useI18n()
 const { copy, copied } = useClipboard()
 const { createToast } = useToastStore()

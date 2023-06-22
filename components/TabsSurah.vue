@@ -8,7 +8,7 @@ const { data: surahs } = useFetch<SurahList>(`${runtimeConfig.public.apiBase}sur
 </script>
 <template>
   <div class="grid grid-cols-3 gap-3">
-    <NuxtLink :to="`/${surah.number}`" v-for="surah in surahs?.data"
+    <NuxtLink :to="`/surahs/${surah.number}/`" v-for="surah in surahs?.data"
       class="flex gap-4 justify-between border-rounded border border-light dark:border-darkSecondary p-3 items-center bold">
       <div class="flex items-center justify-center rounded-50% w-10 h-10 bg-light dark:bg-darkSecondary text-xs">
         {{ surah.number }}

@@ -7,13 +7,12 @@ useHead({
     class: useColorMode().preference,
   }
 })
+
 </script>
 <template>
   <NuxtLayout>
     <NuxtPage class="font-sansSerif" />
   </NuxtLayout>
-  <div id="modal-container" />
-  <div id="toast-container" />
 </template>
 <style>
 @import '@unocss/reset/tailwind.css';

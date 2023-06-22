@@ -55,7 +55,7 @@ const [modalStatus, toggleModal] = useToggle()
           :placeholder="$t('searchPlaceholder')">
       </div>
       <div v-if="isPending">
-        <div v-for="item in 5" class="flex flex-col gap-2 py-2 w-full animate-pulse" >
+        <div v-for="item in 5" class="flex flex-col gap-2 py-2 w-full animate-pulse">
           <div class="bg-grey w-200px h-16px rounded" />
           <div class="bg-grey w-full h-16px rounded" />
           <div class="bg-grey w-80% h-16px rounded" />
@@ -67,10 +67,10 @@ const [modalStatus, toggleModal] = useToggle()
       </div>
       <div v-else class="max-w-500px dark:text-white">
         <div v-for="item in searchData.data.matches" class="border-b-1 py-2">
-          <RouterLink to="/" class="text-primary">
+          <NuxtLink :to="`/surahs/${item.surah.number}/`" class="text-primary">
             {{ item.surah.englishName }}
             {{ item.surah.number }}:{{ item.numberInSurah }}
-          </RouterLink>
+          </NuxtLink>
           <div>
             {{ item.text }}
           </div>

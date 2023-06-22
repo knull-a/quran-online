@@ -7,7 +7,7 @@ const {removeToast} = toastStore
 const { toasts } = storeToRefs(toastStore)
 </script>
 <template>
-  <Teleport to="#toast-container">
+  <Teleport to="body">
     <TransitionGroup name="toast">
       <!-- loop over store -->
       <div v-for="toast in toasts" :key="toast.id" v-show="toast.title"
