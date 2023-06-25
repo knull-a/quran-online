@@ -4,7 +4,8 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@nuxtjs/color-mode",
     "@nuxtjs/i18n",
-    '@vueuse/nuxt'
+    '@vueuse/nuxt',
+    '@nuxtjs/supabase'
   ],
   runtimeConfig: {
     // The private keys which are only available within server-side
