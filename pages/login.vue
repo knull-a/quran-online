@@ -10,8 +10,7 @@ const { handleSubmit } = useForm()
 const { t } = useI18n()
 
 const isSignUp = ref(false)
-const isSignUpState = computed(() => isSignUp.value ? t('signInCheck') : t('signUpCheck'))
-const loginState = computed(() => isSignUp.value ? t('signUp') : t('signIn'))
+const isSignUpState = <T>(firstCondition: T, secondCondition: T) => isSignUp.value ? firstCondition : secondCondition
 const oppositeLoginState = computed(() => !isSignUp.value ? t('signUp') : t('signIn'))
 
 const formAction = async (values: Credentials) => {
@@ -30,7 +29,7 @@ const formAction = async (values: Credentials) => {
       password: values.password
     })
     if (error) throw error
-    else console.log(data)
+    else navigateTo('/profile')
   } catch (error) {
     console.error(error)
   }
@@ -43,13 +42,12 @@ const onSubmit = handleSubmit((values) => {
 
 </script>
 <template>
-  <form class="wrapper m-auto" @submit.stop.prevent="onSubmit">
-    <h3>{{ loginState }}</h3>
+  <form class="wrapper m-auto" @submit.prevent="onSubmit">
     <CustomInput name="email" placeholder="Email" />
     <CustomInput name="password" type="password" placeholder="Password" />
-    <CustomButton :text="loginState" />
+    <CustomButton :text="isSignUpState(t('signUp'), t('signIn'))" />
     <div>
-      <span>{{ isSignUpState }}</span>
+      <span>{{ isSignUpState(t('signInCheck'), t('signUpCheck')) }}</span>
       <CustomButton @click="isSignUp = !isSignUp" theme="btn-flat" :text="oppositeLoginState" />
     </div>
   </form>

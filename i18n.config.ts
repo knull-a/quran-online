@@ -12,7 +12,8 @@ export default defineI18nConfig(() => ({
       signIn: 'Sign In',
       signUpCheck: 'Not have an account?',
       signInCheck: 'Already registered?',
-      confirm: 'Confirm'
+      confirm: 'Confirm',
+      logout: 'Logout'
     },
     ru: {
       caption: 'Читайте, слушайте и изучайте Священный Коран',
@@ -24,7 +25,8 @@ export default defineI18nConfig(() => ({
       signIn: 'Войти',
       signUpCheck: 'Нет аккаунта?',
       signInCheck: 'Уже зарегистрированы?',
-      confirm: 'Подтвердить'
+      confirm: 'Подтвердить',
+      logout: 'Выйти'
     }
   }
 }))
