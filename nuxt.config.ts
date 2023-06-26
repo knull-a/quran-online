@@ -4,15 +4,21 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@nuxtjs/color-mode",
     "@nuxtjs/i18n",
-    '@vueuse/nuxt',
-    '@nuxtjs/supabase'
+    "@vueuse/nuxt",
+    "@nuxtjs/supabase",
+    [
+      "@vee-validate/nuxt",
+      {
+        autoImports: true,
+      },
+    ],
   ],
   runtimeConfig: {
     // The private keys which are only available within server-side
     // Keys within public, will be also exposed to the client-side
     public: {
-      apiBase: "https://api.alquran.cloud/v1/"
-    }
+      apiBase: "https://api.alquran.cloud/v1/",
+    },
   },
   i18n: {
     vueI18n: "./i18n.config.ts",

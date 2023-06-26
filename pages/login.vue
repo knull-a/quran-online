@@ -1,23 +1,56 @@
 <script setup lang="ts">
-const client = useSupabaseClient()
+type Credentials = {
+  email: string
+  password: string
+  confirmPassword?: string
+}
 
+const client = useSupabaseClient()
+const { handleSubmit } = useForm()
+const { t } = useI18n()
 
 const isSignUp = ref(false)
-const login = () => {
-  console.log('login')
+const isSignUpState = computed(() => isSignUp.value ? t('signInCheck') : t('signUpCheck'))
+const loginState = computed(() => isSignUp.value ? t('signUp') : t('signIn'))
+const oppositeLoginState = computed(() => !isSignUp.value ? t('signUp') : t('signIn'))
+
+const formAction = async (values: Credentials) => {
+  try {
+    if (isSignUp.value) {
+      const { data, error } = await client.auth.signUp({
+        email: values.email,
+        password: values.password
+      })
+      if (error) throw error
+      else console.log(data)
+      return
+    }
+    const { data, error } = await client.auth.signInWithPassword({
+      email: values.email,
+      password: values.password
+    })
+    if (error) throw error
+    else console.log(data)
+  } catch (error) {
+    console.error(error)
+  }
 }
 
-const signUp = () => {
-  const {user, error} = client.auth.signUp()
-  console.log('sign up');
-}
+const onSubmit = handleSubmit((values) => {
+  formAction(values)
+  console.log(values)
+})
 
-const formAction = () => isSignUp.value ? signUp() : login()
 </script>
 <template>
-  <form class="wrapper m-auto" @submit.prevent="formAction">
-    <input class="bg-transparent" type="text" placeholder="Email">
-    <input class="bg-transparent" type="text" placeholder="Password">
-    <CustomButton text="Login" />
+  <form class="wrapper m-auto" @submit.stop.prevent="onSubmit">
+    <h3>{{ loginState }}</h3>
+    <CustomInput name="email" placeholder="Email" />
+    <CustomInput name="password" type="password" placeholder="Password" />
+    <CustomButton :text="loginState" />
+    <div>
+      <span>{{ isSignUpState }}</span>
+      <CustomButton @click="isSignUp = !isSignUp" theme="btn-flat" :text="oppositeLoginState" />
+    </div>
   </form>
 </template>

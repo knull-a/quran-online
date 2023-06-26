@@ -14,7 +14,9 @@ import {
 export default defineConfig({
   rules: [],
   shortcuts: {
-    wrapper: "w-full max-w-[1152px] m-auto px-5",
+    'wrapper': "w-full max-w-[1152px] m-auto px-5",
+    'btn-flat': "p-0 bg-transparent",
+    'btn-primary': "bg-primary py-1 px-2 text-white"
   },
   theme: {
     colors: {
