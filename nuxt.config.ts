@@ -38,10 +38,6 @@ export default defineNuxtConfig({
     classSuffix: "",
   },
 
-  app: {
-    pageTransition: { name: "page", mode: "out-in" },
-  },
-
   devtools: {
     enabled: true,
   },

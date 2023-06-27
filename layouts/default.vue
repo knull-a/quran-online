@@ -18,15 +18,15 @@ const changeLocale = (option: string) => locale.value = option
     <header class="px-10 py-3 text-xl flex items-center justify-between">
       <NuxtLink to="/" class="font-bold">Quran Online</NuxtLink>
       <div class="flex gap-2">
-        <button>
+        <NuxtLink to="/profile" @click="">
           <div class="i-mdi-account" />
-        </button>
-        <button @click="toggleLocale()" class="relative">
+        </NuxtLink>
+        <button type="button" @click="toggleLocale()" class="relative">
           <div class="i-mdi-web" />
           <CustomSelectList class="text-sm min-w-50px" :options="localeOptions" :status="localeStatus"
             @select-option="changeLocale" />
         </button>
-        <button @click="toggleDark()">
+        <button type="button" @click="toggleDark()">
           <div class="i-mdi-brightness-6" />
         </button>
         <!-- <div class="i-mdi-magnify" /> -->

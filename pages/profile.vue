@@ -16,5 +16,6 @@ const logout = async () => {
 </script>
 <template>
   Profile {{ user?.email }}
+  {{ user?.user_metadata.username }}
   <CustomButton @click="logout" :text="$t('logout')" />
 </template>

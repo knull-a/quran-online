@@ -23,12 +23,11 @@ const {
   initialValue: props.value,
   validateOnValueUpdate: false
 });
-
 </script>
 <template>
   <div class="w-full">
     <label :for="name">{{ label }}</label>
-    <input class="w-full outline-none rounded-md bg-transparent py-3 px-4"
+    <input class="w-full outline-none rounded-md bg-transparent py-3 px-4 border border-greyLight dark:border-grey"
       :class="{ 'border border-error': !!errorMessage }" :name="name" :id="name" :type="type" :value="inputValue"
       :placeholder="placeholder" @input="handleChange" @blur="handleBlur" />
   </div>
