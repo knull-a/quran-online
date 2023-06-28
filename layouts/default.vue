@@ -21,12 +21,12 @@ const changeLocale = (option: string) => locale.value = option
         <NuxtLink to="/profile" @click="">
           <div class="i-mdi-account" />
         </NuxtLink>
-        <button type="button" @click="toggleLocale()" class="relative">
+        <button type="button" @click="toggleLocale()" class="relative bg-transparent">
           <div class="i-mdi-web" />
           <CustomSelectList class="text-sm min-w-50px" :options="localeOptions" :status="localeStatus"
             @select-option="changeLocale" />
         </button>
-        <button type="button" @click="toggleDark()">
+        <button type="button" @click="toggleDark()" class="bg-transparent">
           <div class="i-mdi-brightness-6" />
         </button>
         <!-- <div class="i-mdi-magnify" /> -->

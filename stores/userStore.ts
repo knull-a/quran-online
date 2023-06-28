@@ -1,14 +1,18 @@
 import { defineStore } from "pinia";
-type Bookmark = {
+export type Bookmark = {
   surahName: string;
   surahNumber: number;
   ayahNumber: number;
+  id: number
 };
 
-const client = useSupabaseAuthClient()
-
 export const useUsersStore = defineStore("user", async () => {
-  const { data: bookmarks, error } = await client.from("user_bookmarks").select("*");
+  const client = useSupabaseAuthClient();
+  const user = useSupabaseUser();
 
-  const userBookmarks = ref<Bookmark[]>([]);
+  const { data: bookmarks, error } = await client
+    .from("user_bookmarks")
+    .select("bookmarks")
+    .eq("user", user.value?.id);
+  return { bookmarks, error };
 });
