@@ -15,6 +15,10 @@ export default defineI18nConfig(() => ({
       confirm: 'Confirm',
       logout: 'Logout',
       bookmarks: 'Bookmarks',
+      successDelete: 'Successfully deleted!',
+      successBookmarks: 'Successfully added to bookmarks!',
+      successCopy: 'Copied to clipboard',
+      errorUnknown: 'An unknown error has occurred. Please try again later.'
     },
     ru: {
       caption: 'Читайте, слушайте и изучайте Священный Коран',
@@ -28,7 +32,11 @@ export default defineI18nConfig(() => ({
       signInCheck: 'Уже зарегистрированы?',
       confirm: 'Подтвердить',
       logout: 'Выйти',
-      bookmarks: 'Закладки'
+      bookmarks: 'Закладки',
+      successDelete: 'Успешно удалено!',
+      successBookmarks: 'Успешно добавлено в закладки.',
+      successCopy: 'Успешно скопировано!',
+      errorUnknown: 'Произошла неизвестная ошибка. Пожалуйста, попробуйте позже.'
     }
   }
 }))

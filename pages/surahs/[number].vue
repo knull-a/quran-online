@@ -18,10 +18,10 @@ type Bookmark = {
   id: number
 };
 
-
 const { locale } = useI18n()
-const { copy, copied } = useClipboard()
+const { copy } = useClipboard()
 const { createToast } = useToastStore()
+const { t } = useI18n()
 
 const client = useSupabaseAuthClient<Bookmark>()
 const user = useSupabaseUser()
@@ -39,41 +39,50 @@ const getSurahAyahText = (index: number) => surah.value ? surah.value.data.ayahs
 
 const copyAyah = (index: number) => {
   copy(getSurahAyahText(index))
-  createToast('Успешно скопировано!', ToastStatus.Success)
+  createToast(t('successCopy'), ToastStatus.Success)
+}
+
+const updateBookmark = async (status: 'add' | 'delete') => {
+  const { data, error } = await client
+    .from('user_bookmarks')
+    .update({
+      user: user.value?.id,
+      bookmarks: bookmarks.value
+    },
+    ).eq("user", user.value?.id)
+  if (error) createToast(t('errorUnknown'), ToastStatus.Error)
+  else status === 'add' ? createToast(t('successBookmarks'), ToastStatus.Success) : createToast(t('successDelete'), ToastStatus.Success)
 }
 
 const addToBookmark = async (ayah: Ayah, surah: SurahItem['data']) => {
   if (bookmarks.value.length) {
     bookmarks.value.push({ surahName: surah.englishNameTranslation, ayahNumber: ayah.numberInSurah, surahNumber: surah.number, id: ayah.number })
-    const { data, error } = await client
-      .from('user_bookmarks')
-      .update({
-        user: user.value?.id,
-        bookmarks: bookmarks.value
-      },
-      ).eq("user", user.value?.id)
-    console.log('update', bookmarks.value)
-    console.log('data', data)
-    console.error(error)
+    await updateBookmark('add')
   } else {
     bookmarks.value.push({ surahName: surah.englishNameTranslation, ayahNumber: ayah.numberInSurah, surahNumber: surah.number, id: ayah.number })
-    const { data, error } = await client
-    .from('user_bookmarks')
-    .insert({
+    const { error } = await client
+      .from('user_bookmarks')
+      .insert({
         user: user.value?.id,
         bookmarks: bookmarks.value
       },
       )
-      console.log('insert', bookmarks.value)
-      console.log('data', data)
-    console.error(error)
+    if (error) createToast(t('errorUnknown'), ToastStatus.Error)
+    else createToast(t('successBookmarks'), ToastStatus.Success)
   }
 
 }
 
+const deleteBookmark = async (ayah: Ayah) => {
+  console.log('before', bookmarks.value)
+  bookmarks.value = bookmarks.value.filter((bookmark) =>
+    bookmark.id !== ayah.number
+  )
+  await updateBookmark('delete')
+}
+
 const bookmarkStatus = (ayah: Ayah) => {
   if (bookmarks.value.length) {
-    console.log('bookmarks', bookmarks.value)
     return bookmarks.value.some((bookmark) => bookmark.id === ayah.number)
   }
 }
@@ -81,6 +90,7 @@ const bookmarkStatus = (ayah: Ayah) => {
 definePageMeta({
   layout: "default",
 });
+
 useHead({
   title: route.params.number as string
 })
@@ -93,16 +103,16 @@ watchEffect(async () => {
 
 onMounted(async () => {
   const { data } = await client
-  .from("user_bookmarks")
-  .select("bookmarks")
-  .eq("user", user.value?.id);
-  if (data) bookmarks.value = data[0].bookmarks
+    .from("user_bookmarks")
+    .select("bookmarks")
+    .eq("user", user.value?.id);
+  if (data && localedData.value.length) bookmarks.value = data[0].bookmarks
   console.info('onmounted', data, bookmarks.value)
 })
 </script>
 <template>
   <div>
-    <div v-if="surah" class="wrapper">
+    <div v-if="surah && localedData.length" class="wrapper">
       <div class="text-center m-auto">
         <h2 class="text-5xl">{{ surah.data.name }}</h2>
         <p>{{ $t('length') }}: {{ surah.data.numberOfAyahs }} {{ $t('ayahs') }}</p>
@@ -118,7 +128,7 @@ onMounted(async () => {
                 <div class="cursor-pointer mb-2">
                   <div v-if="!bookmarkStatus(localedAyah)" class="i-mdi-bookmark-outline hover:bg-primary"
                     @click="addToBookmark(localedAyah, surah.data)" />
-                  <div v-else class="i-mdi-bookmark bg-primary" />
+                  <div v-else class="i-mdi-bookmark bg-primary" @click="deleteBookmark(localedAyah)" />
                 </div>
                 <div class="i-mdi-content-copy hover:bg-primary cursor-pointer" @click="copyAyah(index)" />
               </div>
