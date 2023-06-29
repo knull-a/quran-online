@@ -18,33 +18,23 @@ type Bookmark = {
   id: number
 };
 
-definePageMeta({
-  layout: "default",
-});
 
 const { locale } = useI18n()
 const { copy, copied } = useClipboard()
 const { createToast } = useToastStore()
 
-const client = useSupabaseAuthClient()
+const client = useSupabaseAuthClient<Bookmark>()
 const user = useSupabaseUser()
 const runtimeConfig = useRuntimeConfig()
-// const { bookmarks } = await useUsersStore()
 const route = useRoute()
 
 const localedData = ref<Ayah[]>([])
-const newBookmarks = ref<Bookmark[]>([])
-const bookmarks = ref([])
-
-useHead({
-  title: route.params.number as string
-})
-
+const bookmarks = ref<Bookmark[]>([])
 const edition = computed(() => locale.value === "en" ? "en.arberry" : "ru.kuliev")
+
 const { data: surah } = await useLazyFetch<SurahItem>(`${runtimeConfig.public.apiBase}surah/${route.params.number}`)
 
 const surahNumber = (localedAyah: Ayah) => `${surah?.value?.data.number}:${localedAyah.numberInSurah}`
-
 const getSurahAyahText = (index: number) => surah.value ? surah.value.data.ayahs[index].text : '';
 
 const copyAyah = (index: number) => {
@@ -52,36 +42,62 @@ const copyAyah = (index: number) => {
   createToast('Успешно скопировано!', ToastStatus.Success)
 }
 
-const addTooBookmark = async (ayah: Ayah, surah: SurahItem['data']) => {
-  newBookmarks.value.push({ surahName: surah.englishNameTranslation, ayahNumber: ayah.numberInSurah, surahNumber: surah.number, id: ayah.number })
-  const { data, error } = await client
+const addToBookmark = async (ayah: Ayah, surah: SurahItem['data']) => {
+  if (bookmarks.value.length) {
+    bookmarks.value.push({ surahName: surah.englishNameTranslation, ayahNumber: ayah.numberInSurah, surahNumber: surah.number, id: ayah.number })
+    const { data, error } = await client
+      .from('user_bookmarks')
+      .update({
+        user: user.value?.id,
+        bookmarks: bookmarks.value
+      },
+      ).eq("user", user.value?.id)
+    console.log('update', bookmarks.value)
+    console.log('data', data)
+    console.error(error)
+  } else {
+    bookmarks.value.push({ surahName: surah.englishNameTranslation, ayahNumber: ayah.numberInSurah, surahNumber: surah.number, id: ayah.number })
+    const { data, error } = await client
     .from('user_bookmarks')
     .insert({
-      user: user.value?.id,
-      bookmarks: newBookmarks.value
-    },
-    )
+        user: user.value?.id,
+        bookmarks: bookmarks.value
+      },
+      )
+      console.log('insert', bookmarks.value)
+      console.log('data', data)
+    console.error(error)
+  }
 
-  console.log(bookmarks, surah.englishNameTranslation, surah.number, ayah.numberInSurah)
 }
 
-const bookmarkStatus = (ayah: Ayah) =>
-  bookmarks.value?.some((bookmark) => bookmark.id === ayah.number)
+const bookmarkStatus = (ayah: Ayah) => {
+  if (bookmarks.value.length) {
+    console.log('bookmarks', bookmarks.value)
+    return bookmarks.value.some((bookmark) => bookmark.id === ayah.number)
+  }
+}
 
-
+definePageMeta({
+  layout: "default",
+});
+useHead({
+  title: route.params.number as string
+})
 
 watchEffect(async () => {
   const { data } = await useLazyFetch<SurahItem>(`${runtimeConfig.public.apiBase}surah/${route.params.number}/${edition.value}`)
   if (data.value?.data.ayahs) localedData.value = data.value?.data.ayahs
   console.log(localedData.value)
 })
+
 onMounted(async () => {
-  const { data, error } = await client
-    .from("user_bookmarks")
-    .select("bookmarks")
-    .eq("user", user.value?.id);
-  bookmarks.value = data
-  console.log(data, bookmarks.value)
+  const { data } = await client
+  .from("user_bookmarks")
+  .select("bookmarks")
+  .eq("user", user.value?.id);
+  if (data) bookmarks.value = data[0].bookmarks
+  console.info('onmounted', data, bookmarks.value)
 })
 </script>
 <template>
@@ -99,11 +115,11 @@ onMounted(async () => {
             <div class="flex flex-col gap-1 items-center">
               <p>{{ surahNumber(localedAyah) }}</p>
               <div class="text-xl">
-                <div class="i-mdi-bookmark-outline hover:bg-primary cursor-pointer mb-2"
-                  :class="{ 'bg-primary': bookmarkStatus(localedAyah) }"
-                  @click="addTooBookmark(localedAyah, surah.data)" />
-                {{ bookmarkStatus(localedAyah) }}
-                {{ localedAyah.number }}
+                <div class="cursor-pointer mb-2">
+                  <div v-if="!bookmarkStatus(localedAyah)" class="i-mdi-bookmark-outline hover:bg-primary"
+                    @click="addToBookmark(localedAyah, surah.data)" />
+                  <div v-else class="i-mdi-bookmark bg-primary" />
+                </div>
                 <div class="i-mdi-content-copy hover:bg-primary cursor-pointer" @click="copyAyah(index)" />
               </div>
             </div>
