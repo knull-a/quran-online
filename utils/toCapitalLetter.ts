@@ -1,0 +1,1 @@
+export const toCapitalLetter = (item: string) => item.charAt(0).toUpperCase() + item.substring(1)

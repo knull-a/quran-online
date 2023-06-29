@@ -3,13 +3,12 @@ import { useToastStore, ToastStatus } from "~/stores/toastStore"
 import { storeToRefs } from "pinia"
 
 const toastStore = useToastStore()
-const {removeToast} = toastStore
+const { removeToast } = toastStore
 const { toasts } = storeToRefs(toastStore)
 </script>
 <template>
-  <Teleport to="#toast-container">
+  <Teleport to="body">
     <TransitionGroup name="toast">
-      <!-- loop over store -->
       <div v-for="toast in toasts" :key="toast.id" v-show="toast.title"
         :class="{ success: toast.type === ToastStatus.Success, error: toast.type === ToastStatus.Error, warn: toast.type === ToastStatus.Warn }">
         <div id="toast-success"

@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import MainIcon from '~/assets/icons/MainIcon.vue';
-
-const counter = useCounter()
-
-
-useHead({
-  title: 'My App',
-})
+definePageMeta({
+  layout: "default",
+});
 </script>
 <template>
   <div>

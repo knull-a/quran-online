@@ -14,7 +14,10 @@ import {
 export default defineConfig({
   rules: [],
   shortcuts: {
-    wrapper: "w-full max-w-[1152px] m-auto px-5",
+    'wrapper': "w-full max-w-[1152px] m-auto px-5",
+    'btn-flat': "p-0 bg-transparent",
+    'btn-primary': "bg-primary py-1 px-2 text-white",
+    'btn-transparent': "bg-transparent py-1 px-2 border border-grey"
   },
   theme: {
     colors: {
@@ -22,7 +25,8 @@ export default defineConfig({
       dark: "#1f2125",
       darkSecondary: "#343a40",
       grey: "#666666", 
-      light: "#f4f5f6"
+      light: "#f4f5f6",
+      greyLight: "#ebeef0"
     },
   },
   presets: [

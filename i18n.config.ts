@@ -7,14 +7,36 @@ export default defineI18nConfig(() => ({
       searchPlaceholder: 'What do you want to read?',
       ayahs: 'ayahs',
       length: 'Length',
-      revelation: 'Revelation'
+      revelation: 'Revelation',
+      signUp: 'Sign Up',
+      signIn: 'Sign In',
+      signUpCheck: 'Not have an account?',
+      signInCheck: 'Already registered?',
+      confirm: 'Confirm',
+      logout: 'Logout',
+      bookmarks: 'Bookmarks',
+      successDelete: 'Successfully deleted!',
+      successBookmarks: 'Successfully added to bookmarks!',
+      successCopy: 'Copied to clipboard',
+      errorUnknown: 'An unknown error has occurred. Please try again later.'
     },
     ru: {
-      caption: 'Читай, слушай и изучай Священный Коран',
+      caption: 'Читайте, слушайте и изучайте Священный Коран',
       searchPlaceholder: 'Что вы хотите прочитать?',
       ayahs: 'аятов',
       length: 'Длина',
-      revelation: 'Происхождение'
+      revelation: 'Происхождение',
+      signUp: 'Зарегистрироваться',
+      signIn: 'Войти',
+      signUpCheck: 'Нет аккаунта?',
+      signInCheck: 'Уже зарегистрированы?',
+      confirm: 'Подтвердить',
+      logout: 'Выйти',
+      bookmarks: 'Закладки',
+      successDelete: 'Успешно удалено!',
+      successBookmarks: 'Успешно добавлено в закладки.',
+      successCopy: 'Успешно скопировано!',
+      errorUnknown: 'Произошла неизвестная ошибка. Пожалуйста, попробуйте позже.'
     }
   }
 }))
