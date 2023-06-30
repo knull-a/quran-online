@@ -55,20 +55,25 @@ const updateBookmark = async (status: 'add' | 'delete') => {
 }
 
 const addToBookmark = async (ayah: Ayah, surah: SurahItem['data']) => {
-  if (bookmarks.value.length) {
-    bookmarks.value.push({ surahName: surah.englishNameTranslation, ayahNumber: ayah.numberInSurah, surahNumber: surah.number, id: ayah.number })
-    await updateBookmark('add')
-  } else {
-    bookmarks.value.push({ surahName: surah.englishNameTranslation, ayahNumber: ayah.numberInSurah, surahNumber: surah.number, id: ayah.number })
-    const { error } = await client
-      .from('user_bookmarks')
-      .insert({
-        user: user.value?.id,
-        bookmarks: bookmarks.value
-      },
-      )
-    if (error) createToast(t('errorUnknown'), ToastStatus.Error)
-    else createToast(t('successBookmarks'), ToastStatus.Success)
+  if (user.value) {
+    if (bookmarks.value.length) {
+      bookmarks.value.push({ surahName: surah.englishNameTranslation, ayahNumber: ayah.numberInSurah, surahNumber: surah.number, id: ayah.number })
+      await updateBookmark('add')
+    } else {
+      bookmarks.value.push({ surahName: surah.englishNameTranslation, ayahNumber: ayah.numberInSurah, surahNumber: surah.number, id: ayah.number })
+      const { error } = await client
+        .from('user_bookmarks')
+        .insert({
+          user: user.value?.id,
+          bookmarks: bookmarks.value
+        },
+        )
+      if (error) createToast(t('errorUnknown'), ToastStatus.Error)
+      else createToast(t('successBookmarks'), ToastStatus.Success)
+    }
+  }
+  else {
+    navigateTo("/login")
   }
 
 }

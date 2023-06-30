@@ -20,6 +20,10 @@ const logout = async () => {
   }
 }
 
+const lastRequest = () => {
+  client.auth.getSession()
+}
+
 definePageMeta({
   middleware: ['auth']
 })
@@ -31,22 +35,25 @@ onMounted(async () => {
     .eq("user", user.value?.id);
   if (data) bookmarks.value = data[0].bookmarks
   console.info('onmounted', data, bookmarks.value)
+  console.log(lastRequest())
 })
 </script>
 <template>
   <div class="wrapper">
-    <div class="">
-      <p class="font-bold text-3xl">{{ user?.user_metadata.username }}</p>
+    <div>
+      {{ lastRequest() }}
+      <div class="font-bold text-3xl flex gap-3 items-center">
+        <span>{{ user?.user_metadata.username }}</span>
+        <button @click="logout" class="i-mdi-logout text-red-500" />
+      </div>
       <p class="text-grey">{{ user?.email }}</p>
-
-      <CustomButton @click="logout" theme="btn-flat" class="text-red-500" :text="$t('logout')" />
     </div>
     <div>
       <h3>{{ $t('bookmarks') }}</h3>
-      <div>
-        <div v-for="bookmark in bookmarks" :key="bookmark.id">
-          {{ bookmark.surahName }}
-          {{ bookmark.surahNumber }}:{{ bookmark.ayahNumber }}
+      <div class="flex gap-3 pt-2 pb-6 hidden w-full overflow-auto">
+        <div class="flex gap-1 py-1 px-2 whitespace-nowrap text-ellipsis bg-primary rounded-20" v-for="bookmark in bookmarks" :key="bookmark.id">
+          <span>{{ bookmark.surahName }}</span>
+          <span>{{ bookmark.surahNumber }}:{{ bookmark.ayahNumber }}</span>
         </div>
       </div>
     </div>
