@@ -5,7 +5,7 @@ export enum ToastStatus {
   Success = "success",
 }
 
-type Toast = {
+export type Toast = {
   title: string;
   id: string;
   type: ToastStatus;
@@ -19,25 +19,22 @@ const generateRandomId = () => {
 };
 
 export const useToastStore = defineStore("toast", () => {
-  const toasts = ref<Toast[]>([
-    {
-      title: "",
-      type: ToastStatus.Success,
-      id: "",
-    },
-  ]);
+  const toasts = ref<Toast[]>([]);
   const createToast = (title: string, type: ToastStatus) => {
     const newToast = {
       title,
       id: generateRandomId(),
       type,
     };
+    console.log('before unshift', toasts.value)
     toasts.value.unshift(newToast);
+    console.log('after unshift', toasts.value)
+    console.log('newToast', newToast)
 
     setTimeout(() => {
       const index = toasts.value.findIndex((toast) => toast.id === newToast.id);
       toasts.value.splice(index, 1);
-    }, 4000);
+    }, 40000);
   };
 
   const removeToast = (id: string) => {

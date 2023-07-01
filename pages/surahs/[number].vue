@@ -106,7 +106,7 @@ watchEffect(async () => {
   console.log(localedData.value)
 })
 
-onMounted(async () => {
+onBeforeMount(async () => {
   const { data } = await client
     .from("user_bookmarks")
     .select("bookmarks")
