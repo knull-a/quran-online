@@ -37,7 +37,7 @@ const changeLocale = (option: string) => locale.value = option
     </div>
     <ClientOnly>
       <footer class="flex items-center justify-between py-12 wrapper">
-        <div class="font-bold">
+        <div class="font-bold text-sm sm:text-base">
           <h1>Quran Online</h1>
           <p>{{ $t('caption') }}</p>
         </div>
@@ -46,7 +46,7 @@ const changeLocale = (option: string) => locale.value = option
           <a href="/">Github</a>
           <p>© 2023 knull-a</p>
         </div>
-        <div class="flex items-center gap-6">
+        <div class="items-center gap-6 display-none sm:flex">
           <CustomSelect reversed icon="i-mdi-brightness-6" v-model="$colorMode.preference" :options="themeOptions" />
           <CustomSelect reversed icon="i-mdi-web" v-model="locale" :options="localeOptions" />
         </div>

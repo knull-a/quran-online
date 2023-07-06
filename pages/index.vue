@@ -10,7 +10,7 @@ definePageMeta({
       <div
         class="bg-[url(/img/background.jpg)] min-h-96 dark:saturate-10 dark:brightness-30 dark:contrast-110 absolute top-0 left-0 w-full">
       </div>
-      <div class="relative flex flex-col gap-8 items-center py-20 ">
+      <div class="relative flex flex-col gap-8 items-center py-20 px-4">
         <MainIcon class="" />
         <ModalSearch />
       </div>

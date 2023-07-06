@@ -30,7 +30,6 @@ watchDebounced(searchField, async () => {
       isPending.value = true
       const { data } = await useFetch<Search>(runtimeConfig.public.apiBase + `search/${searchField.value}/all/en.arberry`)
       searchData.value = data.value
-      // isPending.value = pending.value
     } catch (error) {
       console.error(error)
     } finally {
@@ -44,12 +43,12 @@ const [modalStatus, toggleModal] = useToggle()
 <template>
   <button class="flex items-center gap-2 max-w-3xl rounded-[50px] shadow-sm w-full h-16 bg-white px-5"
     @click="toggleModal()">
-    <div class="i-mdi-magnify text-grey text-3xl" />
-    <p class="text-grey">{{ $t('searchPlaceholder') }}</p>
+    <div class="i-mdi-magnify text-grey md:text-3xl sm:text-xl" />
+    <p class="text-grey sm:text-base text-sm">{{ $t('searchPlaceholder') }}</p>
   </button>
   <ModalMain @close-modal="toggleModal()" :status="modalStatus" height="600px">
     <div>
-      <div class="flex items-center gap-2 text-grey">
+      <div class="flex items-center gap-2 text-grey overflow-x-hidden">
         <div class="i-mdi-magnify text-2xl" />
         <input v-model="searchField" type="text" class="border-b-1 focus:outline-0 pb-1 text-lg w-500px dark-bg-dark"
           :placeholder="$t('searchPlaceholder')">
@@ -63,7 +62,7 @@ const [modalStatus, toggleModal] = useToggle()
         </div>
       </div>
       <div v-else-if="!searchData">
-        <QuranIcon class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20" />
+        <QuranIcon class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20 w-200px sm:w-300px" />
       </div>
       <div v-else class="max-w-500px dark:text-white">
         <div v-for="item in searchData.data.matches" class="border-b-1 py-2">

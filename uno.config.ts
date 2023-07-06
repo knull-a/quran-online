@@ -40,8 +40,8 @@ export default defineConfig({
     presetWebFonts({
       fonts: {
         // these will extend the default theme
-        sansSerif: ["Inter", "Inter:400,700"],
-        sans: ["Noto Naskh Arabic", "Noto Naskh Arabic:400,700"],
+        sansSerif: ["Inter", "Inter:400,700", 'sans'],
+        sans: ["Amiri Quran", "Amiri Quran:400,700", 'sans-serif'],
       },
     }),
   ],

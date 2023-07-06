@@ -118,14 +118,14 @@ onBeforeMount(async () => {
 <template>
   <div>
     <div v-if="surah && localedData.length" class="wrapper">
-      <div class="text-center m-auto">
+      <div class="text-center mt-10 m-auto">
         <h2 class="text-5xl">{{ surah.data.name }}</h2>
         <p>{{ $t('length') }}: {{ surah.data.numberOfAyahs }} {{ $t('ayahs') }}</p>
         <p>{{ $t('revelation') }}: <span class="text-grey">{{ surah.data.revelationType }}</span></p>
       </div>
       <div>
         <div class="flex flex-col gap-3 w-full">
-          <div v-for="(localedAyah, index) in localedData" :key="localedAyah.numberInSurah" :id="surahNumber(localedAyah)"
+          <div v-for="(localedAyah, index) in localedData" :key="localedAyah.numberInSurah" :id="String(localedAyah.numberInSurah)"
             class="flex items-center gap-10 border-gray border-b py-8">
             <div class="flex flex-col gap-1 items-center">
               <p>{{ surahNumber(localedAyah) }}</p>
@@ -139,7 +139,7 @@ onBeforeMount(async () => {
               </div>
             </div>
             <div class="w-full">
-              <p class="text-right text-2xl float-right">{{ getSurahAyahText(index) }}</p>
+              <p class="text-right text-2xl mb-4 float-right">{{ getSurahAyahText(index) }}</p>
               <p class="w-full mt-10">{{ localedAyah.text }}</p>
             </div>
           </div>
