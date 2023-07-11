@@ -119,7 +119,7 @@ onBeforeMount(async () => {
   <div>
     <div v-if="surah && localedData.length" class="wrapper">
       <div class="text-center mt-10 m-auto">
-        <h2 class="text-5xl">{{ surah.data.name }}</h2>
+        <h2 class="text-5xl font-arabic mb-8">{{ surah.data.name }}</h2>
         <p>{{ $t('length') }}: {{ surah.data.numberOfAyahs }} {{ $t('ayahs') }}</p>
         <p>{{ $t('revelation') }}: <span class="text-grey">{{ surah.data.revelationType }}</span></p>
       </div>
@@ -139,7 +139,7 @@ onBeforeMount(async () => {
               </div>
             </div>
             <div class="w-full">
-              <p class="text-right text-2xl mb-4 float-right">{{ getSurahAyahText(index) }}</p>
+              <p class="text-right text-2xl mb-4 float-right font-arabic">{{ getSurahAyahText(index) }}</p>
               <p class="w-full mt-10">{{ localedAyah.text }}</p>
             </div>
           </div>

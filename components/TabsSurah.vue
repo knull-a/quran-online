@@ -20,7 +20,7 @@ const { data: surahs } = useFetch<SurahList>(`${runtimeConfig.public.apiBase}sur
         <p class="text-grey">{{ surah.englishNameTranslation }}</p>
       </div>
       <div class="text-center">
-        <p>{{ surah.name }}</p>
+        <p class="font-arabic">{{ surah.name }}</p>
         <p class="text-grey">{{ surah.numberOfAyahs }} {{ $t('ayahs') }}</p>
       </div>
     </NuxtLink>
