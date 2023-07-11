@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useHead({
   titleTemplate: (titleChunk) => {
-    return titleChunk ? `${titleChunk} - Nuxt Test` : 'Nuxt Test';
+    return titleChunk ? `${titleChunk} - Quran Online` : 'Quran Online';
   },
   bodyAttrs: {
     class: useColorMode().preference,

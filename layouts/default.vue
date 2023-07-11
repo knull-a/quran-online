@@ -42,9 +42,9 @@ const changeLocale = (option: string) => locale.value = option
           <p>{{ $t('caption') }}</p>
         </div>
         <div class="text-center">
-          <a href="/" class="mr-4">API</a>
-          <a href="/">Github</a>
-          <p>© 2023 knull-a</p>
+          <a href="https://alquran.cloud/api" class="mr-4">API</a>
+          <a href="https://github.com/knull-a">Github</a>
+          <p>© 2023</p>
         </div>
         <div class="items-center gap-6 display-none sm:flex">
           <CustomSelect reversed icon="i-mdi-brightness-6" v-model="$colorMode.preference" :options="themeOptions" />

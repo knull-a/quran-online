@@ -3,6 +3,7 @@ import { useToggle } from '@vueuse/core'
 import QuranIcon from "~/assets/icons/QuranIcon.vue"
 import { watchDebounced } from '@vueuse/core'
 import type { Data, Edition, Surah } from "~/types/global"
+import { WritableComputedRef } from 'nuxt/dist/app/compat/capi';
 
 type Search = {
   data: {
@@ -18,17 +19,23 @@ type SearchItem = {
   numberInSurah: string
 }
 
+type Locale = 'en' | 'ru'
+
 const searchField = ref('')
 const searchData = ref<Search | null>(null)
 const isPending = ref(false)
 
+const showLocale = <T>(lang: T) => lang === 'en' ? 'en.arberry' : 'ru.kuliev'
+
 const runtimeConfig = useRuntimeConfig()
+const { locale } = useI18n()
 
 watchDebounced(searchField, async () => {
   if (searchField) {
     try {
       isPending.value = true
-      const { data } = await useFetch<Search>(runtimeConfig.public.apiBase + `search/${searchField.value}/all/en.arberry`)
+      const { data } = await useFetch<Search>(runtimeConfig.public.apiBase + `search/${searchField.value}/all/${showLocale(locale.value)}`)
+      console.log(`search/${searchField.value}/all/${showLocale(locale.value)}`, locale)
       searchData.value = data.value
     } catch (error) {
       console.error(error)
